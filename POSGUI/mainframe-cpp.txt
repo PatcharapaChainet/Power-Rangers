@@ -1,0 +1,119 @@
+#include <wx/wx.h>
+#include "ProductManager.h"
+#include "CostCalculator.h"
+#include "CustomerInfo.h"
+#include "PaymentSystem.h"
+
+class MainFrame : public wxFrame {
+public:
+    MainFrame()
+        : wxFrame(nullptr, wxID_ANY, "POS", wxDefaultPosition, wxSize(500, 400)) {
+
+        // Create main panel
+        panelMain = new wxPanel(this);
+        panelMain->SetBackgroundColour(wxColour(220, 220, 250));
+
+        // Create main menu
+        CreateMainMenu();
+
+        // Bind custom event for returning to main menu
+        Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnReturnToMain, this, wxID_HOME);
+    }
+
+    // Button event handlers
+    void OnOpenProductManager(wxCommandEvent& event) {
+        ChangePanel(new ProductManager(panelMain));
+    }
+
+    void OnOpenCostCalculator(wxCommandEvent& event) {
+        ChangePanel(new CostCalculator(panelMain));
+    }
+
+    void OnOpenCustomerInfo(wxCommandEvent& event) {
+        ChangePanel(new CustomerInfo(panelMain));
+    }
+
+    void OnOpenPaymentSystem(wxCommandEvent& event) {
+        ChangePanel(new PaymentSystem(panelMain));
+    }
+
+    void OnExit(wxCommandEvent& event) {
+        Close(true);
+    }
+
+    // Handler for returning to main menu
+    void OnReturnToMain(wxCommandEvent& event) {
+        CreateMainMenu();
+        currentPanel = nullptr;
+        panelMain->Layout();
+    }
+
+private:
+    wxPanel* panelMain;  // Main panel
+    wxPanel* currentPanel = nullptr;  // Current active panel
+
+    // Create the main menu interface
+    void CreateMainMenu() {
+        // Remove the current panel from the sizer if it exists
+        if (panelMain->GetSizer()) {
+            panelMain->GetSizer()->Clear(true);
+        }
+        
+        // Create new sizer for main menu
+        wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+
+        wxStaticText* title = new wxStaticText(panelMain, wxID_ANY, "POS System", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
+        title->SetFont(wxFont(20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
+
+        wxButton* btnProduct = new wxButton(panelMain, 1001, "ระบบจัดการสินค้า", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnCost = new wxButton(panelMain, 1002, "ระบบคำนวณต้นทุน", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnCustomer = new wxButton(panelMain, 1003, "ระบบข้อมูลลูกค้า", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnPayment = new wxButton(panelMain, 1004, "ระบบชำระเงิน", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnExit = new wxButton(panelMain, wxID_EXIT, "ออกจากโปรแกรม", wxDefaultPosition, wxSize(250, 40));
+
+        sizer->Add(title, 0, wxALIGN_CENTER | wxTOP, 20);
+        sizer->Add(btnProduct, 0, wxALIGN_CENTER | wxTOP, 10);
+        sizer->Add(btnCost, 0, wxALIGN_CENTER | wxTOP, 10);
+        sizer->Add(btnCustomer, 0, wxALIGN_CENTER | wxTOP, 10);
+        sizer->Add(btnPayment, 0, wxALIGN_CENTER | wxTOP, 10);
+        sizer->Add(btnExit, 0, wxALIGN_CENTER | wxTOP, 10);
+
+        panelMain->SetSizer(sizer);
+
+        // Bind event handlers to buttons
+        btnProduct->Bind(wxEVT_BUTTON, &MainFrame::OnOpenProductManager, this);
+        btnCost->Bind(wxEVT_BUTTON, &MainFrame::OnOpenCostCalculator, this);
+        btnCustomer->Bind(wxEVT_BUTTON, &MainFrame::OnOpenCustomerInfo, this);
+        btnPayment->Bind(wxEVT_BUTTON, &MainFrame::OnOpenPaymentSystem, this);
+        btnExit->Bind(wxEVT_BUTTON, &MainFrame::OnExit, this);
+    }
+
+    // Change the current panel
+    void ChangePanel(wxPanel* newPanel) {
+        // Hide current panel if it exists
+        if (currentPanel) {
+            currentPanel->Hide();
+        }
+
+        // Clear existing widgets from sizer
+        panelMain->GetSizer()->Clear(true);
+
+        // Add new panel to sizer
+        panelMain->GetSizer()->Add(newPanel, 1, wxEXPAND | wxALL, 10);
+
+        // Update layout
+        panelMain->Layout();
+        currentPanel = newPanel;
+    }
+};
+
+class MyApp : public wxApp {
+public:
+    virtual bool OnInit() {
+        MainFrame* frame = new MainFrame();
+        frame->Show(true);
+        return true;
+    }
+};
+
+wxIMPLEMENT_APP(MyApp);
