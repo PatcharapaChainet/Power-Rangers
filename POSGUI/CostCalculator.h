@@ -10,7 +10,7 @@ class CostCalculator : public wxPanel {
 public:
     CostCalculator(wxWindow* parent) : wxPanel(parent) {
         wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-
+        
         wxStaticText* title = new wxStaticText(this, wxID_ANY, "ระบบคำนวณต้นทุน", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
         title->SetFont(wxFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
         sizer->Add(title, 0, wxALIGN_CENTER | wxTOP, 20);

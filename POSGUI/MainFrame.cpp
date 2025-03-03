@@ -6,7 +6,7 @@
 #include "Item.h"
 #include "customerservice.h"
 #include "cost.h"
-
+#include <vector>
 std::vector<Item> productlist;
 std::vector<Customer> customerlist;
 std::vector<cost> costlist;

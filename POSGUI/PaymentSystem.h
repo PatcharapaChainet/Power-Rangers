@@ -14,7 +14,6 @@ class PaymentSystem : public wxPanel {
 public:
     PaymentSystem(wxWindow* parent);
     int quantity = 0;
-    bool checkcustomer(const string&);
 private:
     wxListCtrl* productListCtrl;
     wxTextCtrl* totalPriceCtrl;
@@ -164,29 +163,11 @@ void PaymentSystem::OnAddProduct(wxCommandEvent& event) {
     }
 }
 
-bool PaymentSystem::checkcustomer(const string& phone) {
-    for (const auto& customer : customerlist) {
-        if (customer.getPnumber() == phone) {
-            return true;
-        }
-    }
-    wxMessageBox("ไม่พบเบอร์โทรศัพท์ในระบบ", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
-    return false;
-}
-
 void PaymentSystem::OnPay(wxCommandEvent& event) {
     double amountPaid = wxAtoi(amountPaidCtrl->GetValue());
     string memberPhone;
-
-    // ตรวจสอบว่า checkbox ใช้แต้มถูกเลือกหรือไม่
     if (usePointsCheckBox->IsChecked()) {
         memberPhone = memberPhoneCtrl->GetValue().ToStdString();
-        checkcustomer(memberPhone);
-        if (memberPhone.empty()) { // ตรวจสอบว่าเบอร์โทรศัพท์ถูกกรอกหรือไม่
-            wxMessageBox("กรุณากรอกเบอร์โทรศัพท์สมาชิก", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
-            return;
-        }
-
         if (checkcustomer(memberPhone)) {
             int pointsToUse = checkpoint(memberPhone);
             double discount = pointsToUse;
@@ -199,10 +180,10 @@ void PaymentSystem::OnPay(wxCommandEvent& event) {
             minusCustomerPoint(memberPhone, discount);
             totalPriceCtrl->SetValue(std::to_string(totalPrice));
         }
-        /*else {
+        else {
             wxMessageBox("กรุณาสมัครสมาชิก", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
             return;
-        }*/
+        }
     }
 
     if (amountPaid < totalPrice) {
@@ -223,7 +204,7 @@ void PaymentSystem::OnPay(wxCommandEvent& event) {
         double change = amountPaid - totalPrice;
         changeCtrl->SetValue(std::to_string(change));
 
-        // เพิ่มคะแนนให้กับสมาชิก
+
         addCustomerPoint(memberPhone, totalPrice / 50);
 
         wxMessageBox("ชำระเงินสำเร็จ", "สำเร็จ", wxOK | wxICON_INFORMATION);

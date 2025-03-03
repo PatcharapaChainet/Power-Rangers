@@ -15,7 +15,7 @@ public:
 
         // Create main menu
         CreateMainMenu();
-
+        
         // Bind custom event for returning to main menu
         Bind(wxEVT_COMMAND_BUTTON_CLICKED, &MainFrame::OnReturnToMain, this, wxID_HOME);
     }

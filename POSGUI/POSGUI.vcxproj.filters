@@ -32,9 +32,6 @@
     <ClInclude Include="CustomerInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PaymentSystem.txt">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Productmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -46,7 +43,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="stock.txt" />
-    <Text Include="customer.txt" />
+    <Text Include="Cost.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="customer.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="stock.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

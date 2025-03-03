@@ -144,10 +144,10 @@
     <ClInclude Include="CustomerInfo.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="PaymentSystem.h" />
-    <ClInclude Include="PaymentSystem.txt" />
     <ClInclude Include="Productmanager.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Cost.txt" />
     <Text Include="customer.txt" />
     <Text Include="stock.txt" />
   </ItemGroup>

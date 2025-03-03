@@ -9,6 +9,7 @@
 #include <ctime>
 #include <algorithm>
 
+
 using namespace std;
 
 class cost {
