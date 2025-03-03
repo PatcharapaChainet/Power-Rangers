@@ -15,7 +15,6 @@ public:
         title->SetFont(wxFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
         sizer->Add(title, 0, wxALIGN_CENTER | wxTOP, 20);
 
-        // Create search input controls (date, month, year)
         wxBoxSizer* inputSizer = new wxBoxSizer(wxHORIZONTAL);
         dateField = new wxTextCtrl(this, wxID_ANY);
         monthField = new wxTextCtrl(this, wxID_ANY);
@@ -32,15 +31,12 @@ public:
         inputSizer->Add(searchButton, 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 10);
         sizer->Add(inputSizer, 0, wxEXPAND | wxALL, 10);
 
-        // Bind search button to event handler
         searchButton->Bind(wxEVT_BUTTON, &CostCalculator::OnSearch, this);
 
-        // Reset button
         wxButton* resetButton = new wxButton(this, wxID_ANY, "รีเซ็ต");
         inputSizer->Add(resetButton, 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 10);
         resetButton->Bind(wxEVT_BUTTON, &CostCalculator::OnReset, this);
 
-        // Create the grid to show cost information
         wxBoxSizer* gridsSizer = new wxBoxSizer(wxHORIZONTAL);
         wxPanel* leftPanel = new wxPanel(this, wxID_ANY);
         wxBoxSizer* leftSizer = new wxBoxSizer(wxVERTICAL);
@@ -56,7 +52,6 @@ public:
         leftSizer->Add(scostGrid, 1, wxEXPAND | wxALL, 10);
         leftPanel->SetSizer(leftSizer);
 
-        // Create the grid to show revenue information
         wxPanel* rightPanel = new wxPanel(this, wxID_ANY);
         wxBoxSizer* rightSizer = new wxBoxSizer(wxVERTICAL);
         revenueGrid = new wxGrid(rightPanel, wxID_ANY);
@@ -74,19 +69,16 @@ public:
         gridsSizer->Add(rightPanel, 1, wxEXPAND);
         sizer->Add(gridsSizer, 1, wxEXPAND | wxALL, 10);
 
-        // Text box for displaying net revenue
         wxBoxSizer* netRevenueSizer = new wxBoxSizer(wxHORIZONTAL);
         netRevenueSizer->Add(new wxStaticText(this, wxID_ANY, "ผลประกอบการ: "), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
         netRevenueText = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(150, 25), wxTE_READONLY);
         netRevenueSizer->Add(netRevenueText, 1, wxRIGHT, 5);
         sizer->Add(netRevenueSizer, 0, wxEXPAND | wxALL, 10);
 
-        // Back to main menu button
         wxButton* backToMenuButton = new wxButton(this, wxID_ANY, "กลับไปเมนูหลัก");
         sizer->Add(backToMenuButton, 0, wxALIGN_CENTER | wxTOP, 20);
         backToMenuButton->Bind(wxEVT_BUTTON, &CostCalculator::OnBackToMain, this);
 
-        // Load all cost data into the grid
         loadAllCosts();
 
         this->SetSizer(sizer);
@@ -102,9 +94,8 @@ private:
     wxGrid* revenueGrid;
     std::string lastSearchDate, lastSearchMonth, lastSearchYear;
 
-    // Load all costs into the left grid on initial load
     void loadAllCosts() {
-        scostGrid->DeleteRows(0, scostGrid->GetNumberRows()); // Clear the grid first
+        scostGrid->DeleteRows(0, scostGrid->GetNumberRows()); 
         for (const auto& cost : costlist) {
             scostGrid->AppendRows(1);
             scostGrid->SetCellValue(scostGrid->GetNumberRows() - 1, 0, cost.day + "/" + cost.month + "/" + cost.year);
@@ -113,12 +104,11 @@ private:
         }
     }
 
-    // Check if the search is a repeat of the previous one
     bool isRepeatSearch(const std::string& date, const std::string& month, const std::string& year) {
         return date == lastSearchDate && month == lastSearchMonth && year == lastSearchYear;
     }
 
-    // Search handler
+ 
     void OnSearch(wxCommandEvent& event) {
         scostGrid->DeleteRows(0, scostGrid->GetNumberRows());
         std::string date = dateField->GetValue().ToStdString();
@@ -130,7 +120,6 @@ private:
             return;
         }
 
-        // Continue with search logic and display in grids
         if (!date.empty() && !month.empty() && !year.empty()) {
             searchday(date, month, year);
         }
@@ -140,15 +129,13 @@ private:
         else if (date.empty() && month.empty() && !year.empty()) {
             searchyear(year);
         }
-
-        // Update the search history to prevent repeat
+        
         lastSearchDate = date;
         lastSearchMonth = month;
         lastSearchYear = year;
 
-        // Display search results in grids
         if (!scost.empty()) {
-            revenueGrid->DeleteRows(0, revenueGrid->GetNumberRows()); // Clear previous results
+            revenueGrid->DeleteRows(0, revenueGrid->GetNumberRows()); 
             for (size_t i = 0; i < scost.size(); ++i) {
                 scostGrid->AppendRows(1);
                 scostGrid->SetCellValue(i, 0, scost[i].date);
@@ -169,7 +156,6 @@ private:
         }
     }
 
-    // Reset search fields
     void OnReset(wxCommandEvent& event) {
         dateField->Clear();
         monthField->Clear();
@@ -179,7 +165,6 @@ private:
         netRevenueText->Clear();
     }
 
-    // Back to main menu handler
     void OnBackToMain(wxCommandEvent& event) {
         saveCostToFile();
         wxCommandEvent evt(wxEVT_COMMAND_BUTTON_CLICKED, 1000);
