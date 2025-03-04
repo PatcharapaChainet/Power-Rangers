@@ -12,15 +12,15 @@ public:
     CustomerInfo(wxWindow* parent) : wxPanel(parent) {
         wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
-        wxStaticText* title = new wxStaticText(this, wxID_ANY, "ระบบข้อมูลลูกค้า", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
+        wxStaticText* title = new wxStaticText(this, wxID_ANY, "CUSTOMER INFO", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
         title->SetFont(wxFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
         sizer->Add(title, 0, wxALIGN_CENTER | wxTOP, 20);
 
         customerGrid = new wxGrid(this, wxID_ANY);
         customerGrid->CreateGrid(0, 3);  
-        customerGrid->SetColLabelValue(0, "ชื่อลูกค้า");
-        customerGrid->SetColLabelValue(1, "เบอร์โทร");
-        customerGrid->SetColLabelValue(2, "คะแนน");
+        customerGrid->SetColLabelValue(0, "NAME");
+        customerGrid->SetColLabelValue(1, "PHONE_NUMBER");
+        customerGrid->SetColLabelValue(2, "POINT");
 
         customerGrid->SetDefaultCellFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
         customerGrid->SetDefaultColSize(120, true);
@@ -35,12 +35,12 @@ public:
         nameField = new wxTextCtrl(this, wxID_ANY);
         phoneField = new wxTextCtrl(this, wxID_ANY);
 
-        formSizer->Add(new wxStaticText(this, wxID_ANY, "ชื่อลูกค้า"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+        formSizer->Add(new wxStaticText(this, wxID_ANY, "NAME"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
         formSizer->Add(nameField, 1, wxLEFT | wxRIGHT, 10);
-        formSizer->Add(new wxStaticText(this, wxID_ANY, "เบอร์โทรลูกค้า"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+        formSizer->Add(new wxStaticText(this, wxID_ANY, "PHONENUMBER"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
         formSizer->Add(phoneField, 1, wxLEFT | wxRIGHT, 10);
 
-        wxButton* addButton = new wxButton(this, wxID_ANY, "เพิ่มลูกค้า");
+        wxButton* addButton = new wxButton(this, wxID_ANY, "ADD");
         formSizer->Add(addButton, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT, 10);
         sizer->Add(formSizer, 0, wxEXPAND | wxALL, 10);
 
@@ -48,14 +48,14 @@ public:
 
         wxBoxSizer* deleteSizer = new wxBoxSizer(wxHORIZONTAL);
         deleteField = new wxTextCtrl(this, wxID_ANY);
-        wxButton* deleteButton = new wxButton(this, wxID_ANY, "ลบลูกค้า");
-        deleteSizer->Add(new wxStaticText(this, wxID_ANY, "กรอกรหัสโทรศัพท์ที่ต้องการลบ:"), 0, wxALIGN_CENTER_VERTICAL);
+        wxButton* deleteButton = new wxButton(this, wxID_ANY, "DELETE");
+        deleteSizer->Add(new wxStaticText(this, wxID_ANY, "fill Phone number to delete:"), 0, wxALIGN_CENTER_VERTICAL);
         deleteSizer->Add(deleteField, 1, wxLEFT, 10);
         deleteSizer->Add(deleteButton, 0, wxLEFT, 10);
 
         sizer->Add(deleteSizer, 0, wxEXPAND | wxALL, 10);
 
-        wxButton* backButton = new wxButton(this, wxID_ANY, "กลับไปหน้าหลัก");
+        wxButton* backButton = new wxButton(this, wxID_ANY, "EXIT");
         sizer->Add(backButton, 0, wxALIGN_CENTER | wxALL, 10);
         backButton->Bind(wxEVT_BUTTON, &CustomerInfo::OnBackToMain, this);
 
@@ -97,10 +97,10 @@ private:
             [&phone](const Customer& customer) { return customer.getPnumber() == phone; });
 
         if (it != customerlist.end()) {
-            wxMessageBox("เบอร์โทรนี้มีอยู่แล้ว กรุณากรอกข้อมูลใหม่", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+            wxMessageBox("this number already registered", "error", wxOK | wxICON_ERROR);
         }
         else if (name.empty() || phone.empty()) {
-            wxMessageBox("กรุณากรอกข้อมูลให้ครบถ้วน", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+            wxMessageBox("please fill all blanket", "error", wxOK | wxICON_ERROR);
         }
         else {
             addCustomer(phone, name, 0);  
@@ -122,7 +122,7 @@ private:
             deleteField->Clear();
         }
         else {
-            wxMessageBox("ไม่พบข้อมูลลูกค้าที่เบอร์โทรนี้", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+            wxMessageBox("can't find this data", "error", wxOK | wxICON_ERROR);
         }
     }
 

@@ -72,11 +72,11 @@ private:
         wxStaticText* title = new wxStaticText(panelMain, wxID_ANY, "POS System", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
         title->SetFont(wxFont(20, wxFONTFAMILY_SWISS, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
 
-        wxButton* btnProduct = new wxButton(panelMain, 1001, "ระบบจัดการสินค้า", wxDefaultPosition, wxSize(250, 40));
-        wxButton* btnCost = new wxButton(panelMain, 1002, "ระบบคำนวณต้นทุน", wxDefaultPosition, wxSize(250, 40));
-        wxButton* btnCustomer = new wxButton(panelMain, 1003, "ระบบข้อมูลลูกค้า", wxDefaultPosition, wxSize(250, 40));
-        wxButton* btnPayment = new wxButton(panelMain, 1004, "ระบบชำระเงิน", wxDefaultPosition, wxSize(250, 40));
-        wxButton* btnExit = new wxButton(panelMain, wxID_EXIT, "ออกจากโปรแกรม", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnProduct = new wxButton(panelMain, 1001, "STOCK MANAGER", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnCost = new wxButton(panelMain, 1002, "COST INSPECTOR", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnCustomer = new wxButton(panelMain, 1003, "CUSTOMER INFO", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnPayment = new wxButton(panelMain, 1004, "PAYMENT SYSTEM", wxDefaultPosition, wxSize(250, 40));
+        wxButton* btnExit = new wxButton(panelMain, wxID_EXIT, "EXIT", wxDefaultPosition, wxSize(250, 40));
 
         sizer->Add(title, 0, wxALIGN_CENTER | wxTOP, 20);
         sizer->Add(btnProduct, 0, wxALIGN_CENTER | wxTOP, 10);

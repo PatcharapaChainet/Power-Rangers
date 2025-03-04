@@ -11,7 +11,7 @@ public:
     CostCalculator(wxWindow* parent) : wxPanel(parent) {
         wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
         
-        wxStaticText* title = new wxStaticText(this, wxID_ANY, "ระบบคำนวณต้นทุน", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
+        wxStaticText* title = new wxStaticText(this, wxID_ANY, "COST INSPECTOR", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
         title->SetFont(wxFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
         sizer->Add(title, 0, wxALIGN_CENTER | wxTOP, 20);
 
@@ -20,20 +20,20 @@ public:
         monthField = new wxTextCtrl(this, wxID_ANY);
         yearField = new wxTextCtrl(this, wxID_ANY);
 
-        inputSizer->Add(new wxStaticText(this, wxID_ANY, "วันที่:"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+        inputSizer->Add(new wxStaticText(this, wxID_ANY, "DAY:"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
         inputSizer->Add(dateField, 1, wxRIGHT, 5);
-        inputSizer->Add(new wxStaticText(this, wxID_ANY, "เดือน:"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+        inputSizer->Add(new wxStaticText(this, wxID_ANY, "MONTH:"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
         inputSizer->Add(monthField, 1, wxRIGHT, 5);
-        inputSizer->Add(new wxStaticText(this, wxID_ANY, "ปี:"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+        inputSizer->Add(new wxStaticText(this, wxID_ANY, "YEAR:"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
         inputSizer->Add(yearField, 1, wxRIGHT, 5);
 
-        wxButton* searchButton = new wxButton(this, wxID_ANY, "ค้นหา");
+        wxButton* searchButton = new wxButton(this, wxID_ANY, "SEARCH");
         inputSizer->Add(searchButton, 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 10);
         sizer->Add(inputSizer, 0, wxEXPAND | wxALL, 10);
 
         searchButton->Bind(wxEVT_BUTTON, &CostCalculator::OnSearch, this);
 
-        wxButton* resetButton = new wxButton(this, wxID_ANY, "รีเซ็ต");
+        wxButton* resetButton = new wxButton(this, wxID_ANY, "RESET");
         inputSizer->Add(resetButton, 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 10);
         resetButton->Bind(wxEVT_BUTTON, &CostCalculator::OnReset, this);
 
@@ -42,9 +42,9 @@ public:
         wxBoxSizer* leftSizer = new wxBoxSizer(wxVERTICAL);
         scostGrid = new wxGrid(leftPanel, wxID_ANY);
         scostGrid->CreateGrid(0, 3);
-        scostGrid->SetColLabelValue(0, "วันที่");
-        scostGrid->SetColLabelValue(1, "บัญชี");
-        scostGrid->SetColLabelValue(2, "ชื่อ");
+        scostGrid->SetColLabelValue(0, "DATE");
+        scostGrid->SetColLabelValue(1, "INCOME");
+        scostGrid->SetColLabelValue(2, "NAME");
         scostGrid->SetDefaultCellFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
         scostGrid->SetColSize(0, 120);
         scostGrid->SetColSize(1, 120);
@@ -56,8 +56,8 @@ public:
         wxBoxSizer* rightSizer = new wxBoxSizer(wxVERTICAL);
         revenueGrid = new wxGrid(rightPanel, wxID_ANY);
         revenueGrid->CreateGrid(0, 2);
-        revenueGrid->SetColLabelValue(0, "วันที่");
-        revenueGrid->SetColLabelValue(1, "บัญชีรวม");
+        revenueGrid->SetColLabelValue(0, "DATE");
+        revenueGrid->SetColLabelValue(1, "INCOME");
         revenueGrid->SetDefaultCellFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
         revenueGrid->SetColSize(0, 120);
         revenueGrid->SetColSize(1, 120);
@@ -70,12 +70,12 @@ public:
         sizer->Add(gridsSizer, 1, wxEXPAND | wxALL, 10);
 
         wxBoxSizer* netRevenueSizer = new wxBoxSizer(wxHORIZONTAL);
-        netRevenueSizer->Add(new wxStaticText(this, wxID_ANY, "ผลประกอบการ: "), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
+        netRevenueSizer->Add(new wxStaticText(this, wxID_ANY, "SUM_INCOME: "), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 5);
         netRevenueText = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(150, 25), wxTE_READONLY);
         netRevenueSizer->Add(netRevenueText, 1, wxRIGHT, 5);
         sizer->Add(netRevenueSizer, 0, wxEXPAND | wxALL, 10);
 
-        wxButton* backToMenuButton = new wxButton(this, wxID_ANY, "กลับไปเมนูหลัก");
+        wxButton* backToMenuButton = new wxButton(this, wxID_ANY, "EXIT");
         sizer->Add(backToMenuButton, 0, wxALIGN_CENTER | wxTOP, 20);
         backToMenuButton->Bind(wxEVT_BUTTON, &CostCalculator::OnBackToMain, this);
 
@@ -116,7 +116,7 @@ private:
         std::string year = yearField->GetValue().ToStdString();
 
         if (isRepeatSearch(date, month, year)) {
-            wxMessageBox("คุณได้ทำการค้นหาข้อมูลนี้แล้ว", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+            wxMessageBox("you have searched this date before", "Error", wxOK | wxICON_ERROR);
             return;
         }
 
@@ -152,7 +152,7 @@ private:
             netRevenueText->SetValue(std::to_string(totalNetRevenue));
         }
         else {
-            wxMessageBox("ไม่พบข้อมูลที่ตรงกับการค้นหา", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+            wxMessageBox("can't find your data", "error", wxOK | wxICON_ERROR);
         }
     }
 

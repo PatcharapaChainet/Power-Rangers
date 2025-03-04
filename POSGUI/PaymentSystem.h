@@ -60,59 +60,59 @@ PaymentSystem::PaymentSystem(wxWindow* parent)
 
     wxBoxSizer* mainSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    titleText = new wxStaticText(this, wxID_ANY, "ระบบชำระเงิน", wxDefaultPosition, wxSize(300, 30), wxALIGN_CENTER);
+    titleText = new wxStaticText(this, wxID_ANY, "PAYMENT SYSTEM", wxDefaultPosition, wxSize(300, 30), wxALIGN_CENTER);
 
     wxBoxSizer* rightSizer = new wxBoxSizer(wxVERTICAL);
 
     productListCtrl = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(400, 300), wxLC_REPORT);
-    productListCtrl->InsertColumn(0, "รหัสสินค้า");
-    productListCtrl->InsertColumn(1, "ชื่อสินค้า");
-    productListCtrl->InsertColumn(2, "จำนวน");
-    productListCtrl->InsertColumn(3, "ราคารวม");
+    productListCtrl->InsertColumn(0, "PRODUCT_ID");
+    productListCtrl->InsertColumn(1, "NAME");
+    productListCtrl->InsertColumn(2, "QUANTITY");
+    productListCtrl->InsertColumn(3, "SUM");
 
     rightSizer->Add(titleText, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, 10);
 
-    rightSizer->Add(new wxStaticText(this, wxID_ANY, "ราคาสินค้ารวม"), 0, wxALL, 5);
+    rightSizer->Add(new wxStaticText(this, wxID_ANY, "Total Price"), 0, wxALL, 5);
     totalPriceCtrl = new wxTextCtrl(this, wxID_ANY, "0.0", wxDefaultPosition, wxSize(150, 30), wxTE_READONLY);
     rightSizer->Add(totalPriceCtrl, 0, wxALL, 5);
 
-    addProductButton = new wxButton(this, ID_ADD_PRODUCT, "เพิ่มสินค้า", wxDefaultPosition, wxSize(100, 30));
+    addProductButton = new wxButton(this, ID_ADD_PRODUCT, "Add Product", wxDefaultPosition, wxSize(100, 30));
     rightSizer->Add(addProductButton, 0, wxALL, 5);
     addProductButton->Bind(wxEVT_BUTTON, &PaymentSystem::OnAddProduct, this);
 
     amountPaidCtrl = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(150, 30));
-    rightSizer->Add(new wxStaticText(this, wxID_ANY, "จำนวนเงินที่ชำระ"), 0, wxALL, 5);
+    rightSizer->Add(new wxStaticText(this, wxID_ANY, "Amount Paid"), 0, wxALL, 5);
     rightSizer->Add(amountPaidCtrl, 0, wxALL, 5);
 
-    addAmountButton = new wxButton(this, ID_ADD_AMOUNT, "เพิ่มจำนวนเงิน", wxDefaultPosition, wxSize(100, 30));
+    addAmountButton = new wxButton(this, ID_ADD_AMOUNT, "Add money", wxDefaultPosition, wxSize(100, 30));
     rightSizer->Add(addAmountButton, 0, wxALL, 5);
     addAmountButton->Bind(wxEVT_BUTTON, &PaymentSystem::OnAddAmount, this);
 
     changeCtrl = new wxTextCtrl(this, wxID_ANY, "0.0", wxDefaultPosition, wxSize(150, 30), wxTE_READONLY);
-    rightSizer->Add(new wxStaticText(this, wxID_ANY, "เงินทอน"), 0, wxALL, 5);
+    rightSizer->Add(new wxStaticText(this, wxID_ANY, "Change"), 0, wxALL, 5);
     rightSizer->Add(changeCtrl, 0, wxALL, 5);
 
     memberPhoneCtrl = new wxTextCtrl(this, wxID_ANY, "", wxDefaultPosition, wxSize(150, 30));
-    rightSizer->Add(new wxStaticText(this, wxID_ANY, "เลขโทรศัพท์สมาชิก"), 0, wxALL, 5);
+    rightSizer->Add(new wxStaticText(this, wxID_ANY, "Phone Number"), 0, wxALL, 5);
     rightSizer->Add(memberPhoneCtrl, 0, wxALL, 5);
 
-    addPhoneButton = new wxButton(this, ID_ADD_PHONE, "เพิ่มเบอร์โทร", wxDefaultPosition, wxSize(100, 30));
+    addPhoneButton = new wxButton(this, ID_ADD_PHONE, "Add Phone Number", wxDefaultPosition, wxSize(100, 30));
     rightSizer->Add(addPhoneButton, 0, wxALL, 5);
     addPhoneButton->Bind(wxEVT_BUTTON, &PaymentSystem::OnAddPhone, this);
 
-    usePointsCheckBox = new wxCheckBox(this, wxID_ANY, "ใช้แต้ม", wxDefaultPosition, wxSize(100, 30));
+    usePointsCheckBox = new wxCheckBox(this, wxID_ANY, "Use discount", wxDefaultPosition, wxSize(100, 30));
     rightSizer->Add(usePointsCheckBox, 0, wxALL, 5);
 
-    payButton = new wxButton(this, ID_PAY, "จ่ายเงิน", wxDefaultPosition, wxSize(100, 30));
+    payButton = new wxButton(this, ID_PAY, "Pay", wxDefaultPosition, wxSize(100, 30));
     rightSizer->Add(payButton, 0, wxALL, 5);
     payButton->Bind(wxEVT_BUTTON, &PaymentSystem::OnPay, this);
 
-    wxButton* backToMainButton = new wxButton(this, wxID_ANY, "กลับสู่หน้าหลัก", wxDefaultPosition, wxSize(100, 30));
+    wxButton* backToMainButton = new wxButton(this, wxID_ANY, "Exit", wxDefaultPosition, wxSize(100, 30));
     rightSizer->Add(backToMainButton, 0, wxALL, 5);
     backToMainButton->Bind(wxEVT_BUTTON, &PaymentSystem::OnBackToMain, this);
 
 
-    resetButton = new wxButton(this, ID_RESET, "รีเซ็ท", wxDefaultPosition, wxSize(100, 30));
+    resetButton = new wxButton(this, ID_RESET, "Reset", wxDefaultPosition, wxSize(100, 30));
     rightSizer->Add(resetButton, 0, wxALL, 5);
     resetButton->Bind(wxEVT_BUTTON, &PaymentSystem::OnReset, this);
 
@@ -131,18 +131,18 @@ void PaymentSystem::OnBackToMain(wxCommandEvent& event) {
 }
 
 void PaymentSystem::OnAddProduct(wxCommandEvent& event) {
-    wxTextEntryDialog codeDialog(this, "กรุณากรอกรหัสสินค้า", "เพิ่มสินค้า", "");
+    wxTextEntryDialog codeDialog(this, "Please input Product ID", "Add Product", "");
     if (codeDialog.ShowModal() == wxID_OK) {
         std::string productCode = codeDialog.GetValue().ToStdString();
 
         bool found = false;
         for (auto& item : productlist) {
             if (item.getcode() == productCode) {
-                wxTextEntryDialog quantityDialog(this, "กรุณากรอกจำนวนสินค้า", "เพิ่มสินค้า", "");
+                wxTextEntryDialog quantityDialog(this, "Please input Product quantity", "Add Product", "");
                 if (quantityDialog.ShowModal() == wxID_OK) {
                     int quantity = wxAtoi(quantityDialog.GetValue());
                     if (quantity > item.getQuantity()) {
-                        wxMessageBox("ขออภัยสินค้าไม่พอ", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+                        wxMessageBox("Sorry not enough product", "error", wxOK | wxICON_ERROR);
                         return;
                     }
                     long index = productListCtrl->InsertItem(productListCtrl->GetItemCount(), productCode);
@@ -157,7 +157,7 @@ void PaymentSystem::OnAddProduct(wxCommandEvent& event) {
             }
         }
         if (found == false) {
-            wxMessageBox("ไม่พบข้อมูลสินค้า", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+            wxMessageBox("can't find product", "error", wxOK | wxICON_ERROR);
             return;
         }
     }
@@ -181,13 +181,13 @@ void PaymentSystem::OnPay(wxCommandEvent& event) {
             totalPriceCtrl->SetValue(std::to_string(totalPrice));
         }
         else {
-            wxMessageBox("กรุณาสมัครสมาชิก", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+            wxMessageBox("please br registered bofore continue", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
             return;
         }
     }
 
     if (amountPaid < totalPrice) {
-        wxMessageBox("จำนวนเงินของคุณไม่เพียงพอ", "ข้อผิดพลาด", wxOK | wxICON_ERROR);
+        wxMessageBox("not enough money", "error", wxOK | wxICON_ERROR);
         return;
     }
     else {
@@ -207,14 +207,14 @@ void PaymentSystem::OnPay(wxCommandEvent& event) {
 
         addCustomerPoint(memberPhone, totalPrice / 50);
 
-        wxMessageBox("ชำระเงินสำเร็จ", "สำเร็จ", wxOK | wxICON_INFORMATION);
+        wxMessageBox("payment successful", "successful", wxOK | wxICON_INFORMATION);
     }
 }
 
 
 
 void PaymentSystem::OnAddAmount(wxCommandEvent& event) {
-    wxTextEntryDialog dialog(this, "กรุณากรอกจำนวนเงินที่ชำระ", "เพิ่มจำนวนเงิน", "");
+    wxTextEntryDialog dialog(this, "please input money amount", "Add money", "");
     if (dialog.ShowModal() == wxID_OK) {
         amountPaidCtrl->SetValue(dialog.GetValue());
 
@@ -222,7 +222,7 @@ void PaymentSystem::OnAddAmount(wxCommandEvent& event) {
 }
 
 void PaymentSystem::OnAddPhone(wxCommandEvent& event) {
-    wxTextEntryDialog dialog(this, "กรุณากรอกหมายเลขโทรศัพท์", "เพิ่มหมายเลขโทรศัพท์", "");
+    wxTextEntryDialog dialog(this, "please input phone number", "Add phonenumber", "");
     if (dialog.ShowModal() == wxID_OK) {
         memberPhoneCtrl->SetValue(dialog.GetValue());
     }

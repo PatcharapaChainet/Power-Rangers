@@ -12,17 +12,17 @@ public:
     ProductManager(wxWindow* parent) : wxPanel(parent) {
         wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
-        wxStaticText* title = new wxStaticText(this, wxID_ANY, "ระบบจัดการสินค้า", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
+        wxStaticText* title = new wxStaticText(this, wxID_ANY, "PRODUCT MANAGER", wxDefaultPosition, wxDefaultSize, wxALIGN_CENTER);
         title->SetFont(wxFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD));
         sizer->Add(title, 0, wxALIGN_CENTER | wxTOP, 20);
 
         productGrid = new wxGrid(this, wxID_ANY);
         productGrid->CreateGrid(0, 5);  
-        productGrid->SetColLabelValue(0, "รหัสสินค้า");
-        productGrid->SetColLabelValue(1, "ชื่อสินค้า");
-        productGrid->SetColLabelValue(2, "ราคาต้นทุน");
-        productGrid->SetColLabelValue(3, "ราคาขาย");
-        productGrid->SetColLabelValue(4, "จำนวนสินค้า");
+        productGrid->SetColLabelValue(0, "PRODUCT ID");
+        productGrid->SetColLabelValue(1, "NAME");
+        productGrid->SetColLabelValue(2, "COST PRICE");
+        productGrid->SetColLabelValue(3, "SALE PRICE");
+        productGrid->SetColLabelValue(4, "QUANTITY");
 
         productGrid->SetDefaultCellFont(wxFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
         productGrid->SetDefaultColSize(120, true);
@@ -41,18 +41,18 @@ public:
         priceField = new wxTextCtrl(this, wxID_ANY);
         quantityField = new wxTextCtrl(this, wxID_ANY);
 
-        formSizer->Add(new wxStaticText(this, wxID_ANY, "ชื่อสินค้า"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+        formSizer->Add(new wxStaticText(this, wxID_ANY, "Name"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
         formSizer->Add(nameField, 1, wxLEFT | wxRIGHT, 10);
-        formSizer->Add(new wxStaticText(this, wxID_ANY, "รหัสสินค้า"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+        formSizer->Add(new wxStaticText(this, wxID_ANY, "ID"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
         formSizer->Add(codeField, 1, wxLEFT | wxRIGHT, 10);
-        formSizer->Add(new wxStaticText(this, wxID_ANY, "ราคาต้นทุน"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+        formSizer->Add(new wxStaticText(this, wxID_ANY, "Cost price"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
         formSizer->Add(costField, 1, wxLEFT | wxRIGHT, 10);
-        formSizer->Add(new wxStaticText(this, wxID_ANY, "ราคาขาย"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+        formSizer->Add(new wxStaticText(this, wxID_ANY, "Sale price"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
         formSizer->Add(priceField, 1, wxLEFT | wxRIGHT, 10);
-        formSizer->Add(new wxStaticText(this, wxID_ANY, "จำนวนสินค้า"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
+        formSizer->Add(new wxStaticText(this, wxID_ANY, "Quantity"), 0, wxALIGN_CENTER_VERTICAL | wxRIGHT, 10);
         formSizer->Add(quantityField, 1, wxLEFT | wxRIGHT, 10);
 
-        wxButton* addButton = new wxButton(this, wxID_ANY, "เพิ่มสินค้า");
+        wxButton* addButton = new wxButton(this, wxID_ANY, "Add");
         formSizer->Add(addButton, 0, wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT, 10);
         sizer->Add(formSizer, 0, wxEXPAND | wxALL, 10);
 
@@ -60,14 +60,14 @@ public:
 
         wxBoxSizer* deleteSizer = new wxBoxSizer(wxHORIZONTAL);
         deleteField = new wxTextCtrl(this, wxID_ANY);
-        wxButton* deleteButton = new wxButton(this, wxID_ANY, "ลบสินค้า");
-        deleteSizer->Add(new wxStaticText(this, wxID_ANY, "กรอกรหัสสินค้าที่จะลบ:"), 0, wxALIGN_CENTER_VERTICAL);
+        wxButton* deleteButton = new wxButton(this, wxID_ANY, "Deleted");
+        deleteSizer->Add(new wxStaticText(this, wxID_ANY, "Please input product ID:"), 0, wxALIGN_CENTER_VERTICAL);
         deleteSizer->Add(deleteField, 1, wxLEFT, 10);
         deleteSizer->Add(deleteButton, 0, wxLEFT, 10);
 
         sizer->Add(deleteSizer, 0, wxEXPAND | wxALL, 10);
 
-        wxButton* backToMainButton = new wxButton(this, wxID_ANY, "กลับสู่หน้าหลัก");
+        wxButton* backToMainButton = new wxButton(this, wxID_ANY, "EXIT");
         sizer->Add(backToMainButton, 0, wxALIGN_CENTER | wxTOP, 10);
         backToMainButton->Bind(wxEVT_BUTTON, &ProductManager::OnBackToMain, this);
 

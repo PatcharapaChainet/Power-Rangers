@@ -107,10 +107,10 @@ inline string addCustomerPoint(string phone, int x) {
         if (c.getPnumber() == phone) {
             c.addpoint(x);
             saveCustomerToFile();
-            return "เพิ่มคะแนนสำเร็จ";
+            return "Point added";
         }
     }
-    return "ไม่พบเบอร์โทร";
+    return "Can't find number";
 }
 
 inline bool checkcustomer(string phone) {
@@ -143,14 +143,14 @@ inline string minusCustomerPoint(string phone, int x) {
             if (c.point >= x) {
                 c.minuspoint(x);
                 saveCustomerToFile();
-                return "หักคะแนนสำเร็จ";
+                return "Point have been decreased";
             }
             else {
-                return "คะแนนไม่เพียงพอ";
+                return "not enough point";
             }
         }
     }
-    return "ไม่พบเบอร์โทร";
+    return "Can't find number";
 }
 
 #endif 
